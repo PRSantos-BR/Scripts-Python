@@ -1,0 +1,24 @@
+# =======================================================================================
+# lst_eventos deverá ter no final 5 eventos.
+# Se for fornecido menos de 5 eventos, lst_eventos deverá ser completado com o valor
+# obj_item = None
+#
+# Como fariam?
+#
+# Eu opto pela "LIST COMPREHENSION".
+# ======================================================================================
+
+lst_eventos = ['EVT1', 'EVT2', 'EVT3']
+obj_item = '####'
+
+# List Comrprehension
+# -------------------
+[lst_eventos.append(obj_item) for i in range(len(lst_eventos), 5)]
+print('Resultado usando LIST COMPREHENSION')
+print(lst_eventos)
+
+# Função Lambda
+#--------------
+list(map(lambda i: lst_eventos.append(obj_item), range(len(lst_eventos), 5)))
+print('Resultado usando LAMBDA')
+print(lst_eventos)

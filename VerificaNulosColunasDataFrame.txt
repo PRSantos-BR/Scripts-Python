@@ -1,0 +1,4 @@
+Verificando NULOS em colunas de um Dataframe.
+=============================================
+
+[print('Coluna: {} / Ocorrências: {}'.format(c, df.filter(col(c).isNull()).count())) for c in df.columns]
