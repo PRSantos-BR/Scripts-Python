@@ -349,9 +349,9 @@ def persiste_hits(conexao: cnnOracle, cursor: cnnOracle.Cursor , tabela: str, da
 # Conectando base dados Oracle
 try:
     print('Conectando banco Oracle...')
-    cnn_P00GG1 = cnnOracle.connect(user='usr_monet',
-                                   password='qaz2wsx3edc$RFV',
-                                   dsn='10.18.32.197:1521/P00GG1',
+    cnn_P00GG1 = cnnOracle.connect(user='USURIO',
+                                   password='SENHA',
+                                   dsn='IP:PORTA/EQUEMA',
                                    encoding='UTF-8')
     print('... conectado!')
 
