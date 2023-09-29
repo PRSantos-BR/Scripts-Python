@@ -349,7 +349,7 @@ def persiste_hits(conexao: cnnOracle, cursor: cnnOracle.Cursor , tabela: str, da
 # Conectando base dados Oracle
 try:
     print('Conectando banco Oracle...')
-    cnn_P00GG1 = cnnOracle.connect(user='USUARIO',
+    cnn_ = cnnOracle.connect(user='USUARIO',
                                    password='SENHA',
                                    dsn='IP:PORTA/ESQUEMA',
                                    encoding='UTF-8')
@@ -368,7 +368,7 @@ except cnnOracle.OperationalError as e:
     print('Erro OperationalError')
 
 
-# with open('C:\\Users\\Z386103\\Documents\\doc_menetizacao_prsantos\\TrabalhosPauloSouto\\Dados_resumo.log', 'w') as arquivo_resumo:
+# with open('C:\\Users\\PRSantos\\Documents\\doc_menetizacao_prsantos\\TrabalhosPauloSouto\\Dados_resumo.log', 'w') as arquivo_resumo:
 with open('/home/usr_monet/extract_elastic/files/Dados_resumo_{0}.log'.format(datetime.now().strftime('%d-%m-%Y %H_%M_%S')), 'w') as arquivo_resumo:
     # define o DELIMITADOR_CAMPO do arquico CSV
     DELIMITADOR_CAMPO: str = '|'
@@ -397,7 +397,7 @@ with open('/home/usr_monet/extract_elastic/files/Dados_resumo_{0}.log'.format(da
     # Lendo arquivo de configurações
     cfg: configparser.ConfigParser = configparser.ConfigParser()
     cfg.read('/home/usr_monet/extract_elastic/Configurações_Monetização.property')
-    # cfg.read('C:\\Users\\Z386103\\ScriptsPython\\pjtElasticSearch\\Configurações_Monetização.property')
+    # cfg.read('C:\\Users\\PRSantos\\ScriptsPython\\pjtElasticSearch\\Configurações_Monetização.property')
 
     # Processa ...
     nodes: list = cfg['NOS_ELASTICSEARCH']['Nos_Elasticsearch'].split('\n')
@@ -493,7 +493,7 @@ with open('/home/usr_monet/extract_elastic/files/Dados_resumo_{0}.log'.format(da
                                                      request_timeout=30)
                     
                     # Cria cursor ...
-                    crs_dados_api = cnn_P00GG1.cursor()
+                    crs_dados_api = cnn_.cursor()
 
                     # Data e hora do início do processamento do índice
                     dataHoraInicioProcessoIndice: datetime = datetime.now()
@@ -538,7 +538,7 @@ with open('/home/usr_monet/extract_elastic/files/Dados_resumo_{0}.log'.format(da
                                     lote_hits.append(dict(zip(campos, conteudo_source_hit(api, hit).split('|'))))
 
                                 # Persiste hits base Oracle
-                                persiste_hits(conexao=cnn_P00GG1, cursor=crs_dados_api, tabela=apis_a_processar[api], dados=lote_hits)
+                                persiste_hits(conexao=cnn_, cursor=crs_dados_api, tabela=apis_a_processar[api], dados=lote_hits)
                             else:
                                 # Recebe demais lotes
                                 try:
@@ -563,7 +563,7 @@ with open('/home/usr_monet/extract_elastic/files/Dados_resumo_{0}.log'.format(da
                                     lote_hits.append(dict(zip(campos, conteudo_source_hit(api, hit).split('|'))))
 
                                 # Persiste hits base Oracle
-                                persiste_hits(conexao=cnn_P00GG1, cursor=crs_dados_api, tabela=apis_a_processar[api], dados=lote_hits)
+                                persiste_hits(conexao=cnn_, cursor=crs_dados_api, tabela=apis_a_processar[api], dados=lote_hits)
 
                         # Talvez não precise limpar o SCROLL
                         es.clear_scroll(scroll_id=scroll_id)
@@ -579,13 +579,13 @@ with open('/home/usr_monet/extract_elastic/files/Dados_resumo_{0}.log'.format(da
                     # ... em arquivo .CSV (DadosResumo.Log)
                     arquivo_resumo.write(api + DELIMITADOR_CAMPO + indice + DELIMITADOR_CAMPO + str(search_results['hits']['total']['value']) + '\n')
                     # ... em tabela ORACLE (stg_log)
-                    crs_dados_log = cnn_P00GG1.cursor()
+                    crs_dados_log = cnn_.cursor()
 
                     try:
                         declaracao = 'INSERT INTO stg_log VALUES (:nome_indice, :nome_api, :total_hits, :data_evento)'
                         crs_dados_log.execute(declaracao, (indice, api, search_results['hits']['total']['value'], date.today()))
-                        cnn_P00GG1.commit()
-                    except cnn_P00GG1.DatabaseError:
+                        cnn_.commit()
+                    except cnn_.DatabaseError:
                         pass
 
                     #
@@ -626,5 +626,5 @@ with open('/home/usr_monet/extract_elastic/files/Dados_resumo_{0}.log'.format(da
     arquivo_resumo.write('=' * TAMANHO_LINHA + '\n\n')
 
     #
-    if cnn_P00GG1:
-        cnn_P00GG1.close()
+    if cnn_:
+        cnn_.close()
