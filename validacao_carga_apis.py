@@ -110,9 +110,9 @@ def valida_telefone(url: str, end_point: str, token: str, numero_telefone: str, 
                          headers=headers_api,
                          data=json.dumps(data_app))
     
-    # Número Linha: 5598984264210 / Número CPF: 05475727777 / {"data":{"result":{"summaryMessage":"Customer found.","detailedMessage":"CPF does not belong to customer’s MSISDN."}}}
+    # Número Linha: 55999999999 / Número CPF: 9999999999 / {"data":{"result":{"summaryMessage":"Customer found.","detailedMessage":"CPF does not belong to customer’s MSISDN."}}}
 
-    # Número Linha: 5598984277777 / Número CPF: 05475723362 / {"data":{"result":{"summaryMessage":"Customer found.","detailedMessage":"CPF does not belong to customer’s MSISDN."}}}
+    # Número Linha: 55999999999 / Número CPF: 9999999999 / {"data":{"result":{"summaryMessage":"Customer found.","detailedMessage":"CPF does not belong to customer’s MSISDN."}}}
 
     numero_telefone = json.loads(resp.request.body)['data']['customer']['networkMsisdn']
     numero_cpf = json.loads(resp.request.body)['data']['customer']['cpf']
@@ -130,15 +130,15 @@ def valida_telefone(url: str, end_point: str, token: str, numero_telefone: str, 
 def recupera_amostra() -> list:
     try:
         print('Conectando banco Oracle...')
-        dados_conexao: dict = json.loads(cfg['DADOS_CONEXOES']['P00DW1'])
+        dados_conexao: dict = json.loads(cfg['DADOS_CONEXOES']['SERVIDOR'])
 
-        cnn_P00DW1 = cnnOracle.connect(user=dados_conexao['usuario'],
+        cnn_SERVIDOR = cnnOracle.connect(user=dados_conexao['usuario'],
                                        password=dados_conexao['senha'],
                                        dsn=dados_conexao['dsn'],
                                        encoding='UTF-8')
 
         # Fabrica CURSOR
-        crs_ = cnn_P00DW1.cursor()
+        crs_ = cnn_SERVIDOR.cursor()
 
         query = ''
         if argumentos.nome_api == 'ALERT':
@@ -184,7 +184,7 @@ def recupera_amostra() -> list:
 
         # Fecha Cursor e Conexão
         crs_.close()
-        cnn_P00DW1.close()
+        cnn_SERVIDOR.close()
     
         # Retorna amostra
         return amostra
@@ -203,11 +203,11 @@ def recupera_amostra() -> list:
 
 def recupera_amostra_teste() -> list:
     # Valida Telefone 
-    amostra = [('98984277777', '05475777777')]
+    amostra = [('99999977777', '99999777777')]
 
     # Valida Alerta
     """
-    amostra = [('98984666666', '054757777777'), ]
+    amostra = [('99999977777', '99999777777'), ]
     """
 
     # Score e Score Customizado
@@ -229,7 +229,7 @@ argumentos = parser.parse_args()
 # Lendo arquivo de configuraçães
 cfg: configparser.ConfigParser = configparser.ConfigParser()
 # cfg.read('/home/usr_monet/valida_carga_apis/Configuracoes_ValidacaoCargaAPIs.property')
-cfg.read('C:\\Users\\Z386103\\ScriptsPython\\pjtTesteStressAPIs\\Configuracoes_ValidacaoCargaAPIs.property')
+cfg.read('C:\\Users\\PRSantos\\ScriptsPython\\pjtTesteStressAPIs\\Configuracoes_ValidacaoCargaAPIs.property')
 
 cliente: dict = json.loads(cfg['CLIENTES'][argumentos.sigla_cliente])
 tabela: dict = json.loads(cfg['TABELAS_APIS'][argumentos.nome_api])
