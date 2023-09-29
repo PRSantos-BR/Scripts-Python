@@ -396,8 +396,8 @@ with open('/home/PRSantos/extract_elastic/files/Dados_resumo_{0}.log'.format(dat
 
     # Lendo arquivo de configurações
     cfg: configparser.ConfigParser = configparser.ConfigParser()
-    cfg.read('/home/PRSantos/extract_elastic/Configurações_Monetização.property')
     # cfg.read('C:\\Users\\PRSantos\\ScriptsPython\\pjtElasticSearch\\Configurações_Monetização.property')
+    cfg.read('/home/PRSantos/extract_elastic/Configurações_Monetização.property')
 
     # Processa ...
     nodes: list = cfg['NOS_ELASTICSEARCH']['Nos_Elasticsearch'].split('\n')
