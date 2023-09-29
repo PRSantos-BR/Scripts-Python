@@ -369,7 +369,7 @@ except cnnOracle.OperationalError as e:
 
 
 # with open('C:\\Users\\PRSantos\\Documents\\doc_menetizacao_prsantos\\TrabalhosPauloSouto\\Dados_resumo.log', 'w') as arquivo_resumo:
-with open('/home/usr_monet/extract_elastic/files/Dados_resumo_{0}.log'.format(datetime.now().strftime('%d-%m-%Y %H_%M_%S')), 'w') as arquivo_resumo:
+with open('/home/PRSantos/extract_elastic/files/Dados_resumo_{0}.log'.format(datetime.now().strftime('%d-%m-%Y %H_%M_%S')), 'w') as arquivo_resumo:
     # define o DELIMITADOR_CAMPO do arquico CSV
     DELIMITADOR_CAMPO: str = '|'
 
@@ -396,7 +396,7 @@ with open('/home/usr_monet/extract_elastic/files/Dados_resumo_{0}.log'.format(da
 
     # Lendo arquivo de configurações
     cfg: configparser.ConfigParser = configparser.ConfigParser()
-    cfg.read('/home/usr_monet/extract_elastic/Configurações_Monetização.property')
+    cfg.read('/home/PRSantos/extract_elastic/Configurações_Monetização.property')
     # cfg.read('C:\\Users\\PRSantos\\ScriptsPython\\pjtElasticSearch\\Configurações_Monetização.property')
 
     # Processa ...
@@ -480,7 +480,7 @@ with open('/home/usr_monet/extract_elastic/files/Dados_resumo_{0}.log'.format(da
             tamanho_scroll: int = 10000
 
             # Índices a processar
-            indices: dict = es.indices.get('dops_monetizacao_apigeesaas-' + str(data_inicial).replace('-', '.'))
+            indices: dict = es.indices.get('dops_xxxxxxxxx-' + str(data_inicial).replace('-', '.'))
 
             for indice in indices.keys():
                 if int(indice[-2:]) > 0:
