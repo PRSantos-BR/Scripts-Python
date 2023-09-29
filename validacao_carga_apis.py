@@ -228,7 +228,7 @@ argumentos = parser.parse_args()
 
 # Lendo arquivo de configuraçães
 cfg: configparser.ConfigParser = configparser.ConfigParser()
-# cfg.read('/home/usr_monet/valida_carga_apis/Configuracoes_ValidacaoCargaAPIs.property')
+# cfg.read('/home/prsantos/valida_carga_apis/Configuracoes_ValidacaoCargaAPIs.property')
 cfg.read('C:\\Users\\PRSantos\\ScriptsPython\\pjtTesteStressAPIs\\Configuracoes_ValidacaoCargaAPIs.property')
 
 cliente: dict = json.loads(cfg['CLIENTES'][argumentos.sigla_cliente])
