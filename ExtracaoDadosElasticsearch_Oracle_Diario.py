@@ -330,7 +330,7 @@ def conteudo_source_hit(nome_api: str, source_hit) -> str:
     return hit_formatado
 
 
-def persiste_hits(conexao: cnnOracle, cursor: cnnOracle.Cursor , tabela: str, dados: list):
+def persiste_hits(conexao: cnnOracle, cursor: cnnOracle.Cursor, tabela: str, dados: list):
     # Grava registro tabela banco ORACLE
     try:
         declaracao = 'INSERT INTO {0} VALUES ({1})'.format(tabela,
