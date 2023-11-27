@@ -27,12 +27,14 @@ expedientes: list = [['30/10/2023', '09:10:00', '12:00:00', '14:00:00', '18:44:0
                      ['17/11/2023', '09:43:00', '12:00:00', '14:00:00', '18:30:00'],
                      ['18/11/2023', '09:10:00', '11:00:00', '00:00:00', '00:00:00'],
                      ['21/11/2023', '07:40:00', '11:00:00', '00:00:00', '00:00:00'],
-                     ['24/11/2023', '09:20:00', '00:00:00', '00:00:00', '17:00:00'],]
+                     ['24/11/2023', '09:20:00', '00:00:00', '00:00:00', '17:00:00']]
 
 valor_hh: float = float(input('Forneça o valor do H/H: '))
 
 #
-segundos_trabalhados: int = sum([calcula_segundos_trabalhados(expediente).seconds for expediente in expedientes])
+segundos_trabalhados: int = sum([calcula_segundos_trabalhados(expediente).seconds
+                                 for expediente
+                                 in expedientes])
 minutos, segundos = divmod(segundos_trabalhados, 60)
 horas, minutos = divmod(minutos, 60)
 
@@ -40,4 +42,4 @@ print('Horas trabalhadas: {0}'.format('%02d:%02d:%02d' % (horas, minutos, segund
 print('Total a pagar: {0}'.format(locale.currency(val=(valor_hh / 3600) * segundos_trabalhados,
                                                   grouping=True,
                                                   symbol=True))
-                                 )
+      )
