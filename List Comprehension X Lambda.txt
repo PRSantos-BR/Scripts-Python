@@ -1,24 +1,27 @@
-# =======================================================================================
-# lst_eventos deverá ter no final 5 eventos.
-# Se for fornecido menos de 5 eventos, lst_eventos deverá ser completado com o valor
-# obj_item = None
-#
-# Como fariam?
-#
-# Eu opto pela "LIST COMPREHENSION".
-# ======================================================================================
+# ================================================================================================
+# LST_EVENTS deverá ter no final "n" eventos.
+# Se for fornecido menos de "n" eventos, LST_EVENTS deverá ser completado com o valor de OBJ_ITEM
+================================================================================================
 
-lst_eventos = ['EVT1', 'EVT2', 'EVT3']
-obj_item = '####'
+lst_events: list[str] = ['EVT1', 'EVT2', 'EVT3']
+obj_item: str = '####'
+lst_size: int = 5
+
+
+# Simple List
+# -------------------
+lst_events.extend([obj_item for _ in range(lst_size - len(lst_events))])
+print(f'Result using SIMPLE LIST: {lst_events}')
+
 
 # List Comrprehension
 # -------------------
-[lst_eventos.append(obj_item) for i in range(len(lst_eventos), 5)]
-print('Resultado usando LIST COMPREHENSION')
-print(lst_eventos)
+[lst_events.append(obj_item) for i in range(len(lst_events), lst_size)]
+print(f'Result using LIST COMPREHENSION: {lst_events}')
+
 
 # Função Lambda
 #--------------
-list(map(lambda i: lst_eventos.append(obj_item), range(len(lst_eventos), 5)))
-print('Resultado usando LAMBDA')
-print(lst_eventos)
+result: object = lambda lst_events, obj_item, lst_size: lst_events.extend([obj_item for _ in range(lst_size - len(lst_events))])
+result(lst_events, obj_item, 5)
+print(f'Result using LAMBDA FUNCTION: {lst_events}')
